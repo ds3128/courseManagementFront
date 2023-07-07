@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="card col-md-7 offset-3 mt-3">
+    <div class="card-header">New Auteur</div>
+    <div class="car-body">
+      <form [formGroup]="newAuteurFormGroup" (ngSubmit)="handleSaveAuteur()">
+        <div class="mb-3 m-2">
+          <label class="form-label">FirstName : </label>
+          <input type="text" formControlName="firstName" class="form-control">
+          <span class="text-danger" *ngIf="newAuteurFormGroup.controls['firstName'].touched
+                && newAuteurFormGroup.controls['firstName'].errors
+                &&  newAuteurFormGroup.controls['firstName'].errors!['required']">
+            FirstName is required
+          </span>
+        </div>
+
+        <div class="mb-3 m-2">
+          <label class="form-label">LastName : </label>
+          <input type="text" formControlName="lastName" class="form-control">
+          <span class="text-danger" *ngIf="newAuteurFormGroup.controls['lastName'].touched
+                && newAuteurFormGroup.controls['lastName'].errors
+                &&  newAuteurFormGroup.controls['lastName'].errors!['lastName']">
+            LastName is required
+          </span>
+        </div>
+        <div class="mb-3 m-2">
+          <label class="form-label">Tel : </label>
+          <input type="text" formControlName="tel" class="form-control">
+                    <span class="text-danger" *ngIf="newAuteurFormGroup.controls['tel'].touched
+                          && newAuteurFormGroup.controls['tel'].errors
+                          &&  newAuteurFormGroup.controls['tel'].errors!['tel']">
+                      Phone number is required
+                    </span>
+        </div>
+        <div class="mb-3 m-2">
+          <label class="form-label">Email : </label>
+          <input type="text" formControlName="email" class="form-control">
+                    <span class="text-danger" *ngIf="newAuteurFormGroup.controls['email'].touched
+                          && newAuteurFormGroup.controls['email'].errors
+                          &&  newAuteurFormGroup.controls['email'].errors!['email']">
+                      Email is not valid
+                    </span>
+        </div>
+        <div class="mb-3 m-2">
+          <label class="form-label">Grade :</label>
+          <select formControlName="grade" class="form-select">
+            <option [value]="null" selected disabled>-- Choose grade --</option>
+            <option value="ASSISTANT">Assistant</option>
+            <option value="CHARGE_DE_COURS">Chargé de cours</option>
+            <option value="MAITRE_DE_CONFERENCE">Maître de conférence</option>
+            <option value="PROFESSEUR">Professeur</option>
+          </select>
+          <span class="text-danger" *ngIf="newAuteurFormGroup.controls['grade'].touched
+              && newAuteurFormGroup.controls['grade'].errors
+              && newAuteurFormGroup.controls['grade'].errors['required']">
+            grade is required
+          </span>
+        </div>
+
+        <button [disabled]="!newAuteurFormGroup.valid" class="btn btn-success m-2">Save</button>
+      </form>
+    </div>
+  </div>
+</div>
