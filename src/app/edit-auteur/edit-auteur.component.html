@@ -2,10 +2,10 @@
   <div class="card col-md-7 offset-3 mt-3">
     <div class="card-header">Update Auteur</div>
     <div class="car-body">
-      <form [formGroup]="editAuteurFormGroup" (ngSubmit)="handleUpdateAuteur()">
+      <form *ngIf="editAuteurFormGroup" [formGroup]="editAuteurFormGroup" (ngSubmit)="handleUpdateAuteur()">
         <div class="mb-3">
           <label class="form-label p-1">ID : </label>
-          <label class="form-label" *ngIf="editAuteurFormGroup">{{ auteur.id }}</label>
+          <label class="form-label" *ngIf="editAuteurFormGroup">{{ this.auteur.id }}</label>
         </div>
         <div class="mb-3 m-2">
           <label class="form-label">First Name : </label>
@@ -27,7 +27,7 @@
           <input type="text" formControlName="lastName" class="form-control">
           <span class="text-danger" *ngIf="editAuteurFormGroup.controls['lastName'].touched
                 && editAuteurFormGroup.controls['lastName'].errors
-                &&  editAuteurFormGroup.controls['lastName'].errors!['lastName']">
+                &&  editAuteurFormGroup.controls['lastName'].errors['lastName']">
             LastName is required
           </span>
         </div>
@@ -36,7 +36,7 @@
           <input type="text" formControlName="tel" class="form-control">
           <span class="text-danger" *ngIf="editAuteurFormGroup.controls['tel'].touched
                           && editAuteurFormGroup.controls['tel'].errors
-                          &&  editAuteurFormGroup.controls['tel'].errors!['tel']">
+                          &&  editAuteurFormGroup.controls['tel'].errors['tel']">
                       Phone number is required
                     </span>
         </div>
@@ -45,7 +45,7 @@
           <input type="text" formControlName="email" class="form-control">
           <span class="text-danger" *ngIf="editAuteurFormGroup.controls['email'].touched
                           && editAuteurFormGroup.controls['email'].errors
-                          &&  editAuteurFormGroup.controls['email'].errors!['email']">
+                          &&  editAuteurFormGroup.controls['email'].errors['email']">
                       Email is not valid
                     </span>
         </div>

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Auteur} from "../model/auteur.model";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuteurService} from "../services/auteur.service";
 import {ActivatedRoute, Router} from "@angular/router";
 
@@ -16,19 +16,26 @@ export class EditAuteurComponent implements OnInit{
   editAuteurFormGroup! : FormGroup;
 
   constructor(private fb : FormBuilder, private auteurService : AuteurService, private router : Router, private route : ActivatedRoute) {
-    this.auteur = this.router.getCurrentNavigation()?.extras.state as Auteur;
+    // this.auteur = this.router.getCurrentNavigation()?.extras.state as Auteur;
   }
 
-  ngOnInit() : void {
+  ngOnInit() {
     this.auteurId = this.route.snapshot.params['id'];
-    this.handleSearchAuteurId();
+    this.handleFindAuteurId()
   }
 
-  handleSearchAuteurId(){
+  handleFindAuteurId() : void {
     this.auteurService.searchAuteurById(this.auteurId).subscribe({
       next : (auteur) => {
         this.auteur = auteur;
-        this.createEditAuteurFormGroup();
+        this.editAuteurFormGroup = this.fb.group({
+          id: [this.auteur.id, []],
+          firstName: [this.auteur.firstName, [Validators.required, Validators.minLength(5)]],
+          lastName: [this.auteur.lastName, [Validators.required, Validators.minLength(5)]],
+          tel: [this.auteur.tel, [Validators.required, Validators.minLength(9)]],
+          email: [this.auteur.email, [Validators.required, Validators.email]],
+          grade: [this.auteur.grade, [Validators.required]]
+        });
       },
       error : err => {
         console.log(err);
@@ -36,28 +43,18 @@ export class EditAuteurComponent implements OnInit{
     });
   }
 
-  createEditAuteurFormGroup(): void {
-    this.editAuteurFormGroup = this.fb.group({
-      id : [this.auteur.id],
-      firstName: [this.auteur.firstName, [Validators.required, Validators.minLength(2)]],
-      lastName: [this.auteur.lastName, [Validators.required, Validators.minLength(2)]],
-      tel: [this.auteur.tel, [Validators.required, Validators.minLength(9)]],
-      email: [this.auteur.email, [Validators.required, Validators.email]],
-      grade: [this.auteur.grade, [Validators.required]]
-    });
-  }
-
   handleUpdateAuteur() {
-    const auteur = this.editAuteurFormGroup?.value;
-    auteur.id = this.auteur.id;
-    this.auteurService.updateAuteur(auteur.id, auteur).subscribe({
-      next : (data) => {
+    const updatedAuteur = this.editAuteurFormGroup?.value;
+    this.auteur = updatedAuteur
+    this.auteurService.updateAuteur(this.auteur.id, this.auteur).subscribe({
+      next: (data) => {
         alert("Auteur updated successfully");
-        this.router.navigateByUrl("/auteur")
+        this.router.navigateByUrl("/auteur").then(r => {});
       },
-      error : (err) => {
+      error: (err) => {
         console.log(err);
       }
     });
   }
+
 }

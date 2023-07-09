@@ -13,7 +13,7 @@ import { tap } from 'rxjs/operators';
 })
 export class AuteurComponent implements OnInit {
 
-  auteur$!: Observable<Auteur[]>;
+  auteur!: Observable<Auteur[]>;
   errorMessage!: string;
   searchFormGroup: FormGroup | undefined;
 
@@ -32,7 +32,7 @@ export class AuteurComponent implements OnInit {
 
   handleSearchAuteur() {
     const keyword = this.searchFormGroup?.value.keyword;
-    this.auteur$ = this.auteurService.searchAuteur(keyword).pipe(
+    this.auteur = this.auteurService.searchAuteur(keyword).pipe(
       catchError(err => {
         console.log(err.message)
         this.errorMessage = err.message;
@@ -46,7 +46,7 @@ export class AuteurComponent implements OnInit {
     if (!conf) return;
     this.auteurService.deleteAuteur(a.id).subscribe({
       next: () => {
-        this.auteur$ = this.auteur$.pipe(
+        this.auteur = this.auteur.pipe(
           tap(data => {
             const index = data.indexOf(a);
             if (index > -1) {
@@ -62,6 +62,8 @@ export class AuteurComponent implements OnInit {
   }
 
   handleEditAuteur(auteur: Auteur) {
-    this.router.navigateByUrl("/edit-auteur/"+auteur.id);
+    this.router.navigateByUrl("/edit-auteur/" + auteur.id).then(r  => {
+
+    });
   }
 }

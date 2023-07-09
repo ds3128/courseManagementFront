@@ -1,5 +1,5 @@
 <div class="container mt-2">
-  <ng-container *ngIf = "auteur$ | async as listAuteur; else failureOrLoading">
+  <ng-container *ngIf = "auteur | async as listAuteur; else failureOrLoading">
     <div class="card">
       <div class="card-header">Auteur</div>
       <div class="card-body">
@@ -20,7 +20,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let a of auteur$ | async">
+          <tr *ngFor="let a of auteur | async">
             <td>{{a.id}}</td>
             <td>{{a.firstName}}</td>
             <td>{{a.lastName}}</td>

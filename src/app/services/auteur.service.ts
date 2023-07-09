@@ -25,11 +25,12 @@ export class AuteurService {
   }
 
   public updateAuteur(id: number, auteur: Auteur): Observable<Auteur> {
-    return this.http.put<Auteur>(`${this.backEndHost}/auteur/${id}`, auteur);
+    console.log(id, auteur)
+    return this.http.put<Auteur>(this.backEndHost +"/auteur/"+id, auteur);
   }
 
   public searchAuteurById(id : number) : Observable<Auteur> {
-    return this.http.get<Auteur>(`${this.backEndHost}/auteur/${id}`)
+    return this.http.get<Auteur>(this.backEndHost +"/auteur/"+id)
   }
 
   public deleteAuteur(id : number) {
