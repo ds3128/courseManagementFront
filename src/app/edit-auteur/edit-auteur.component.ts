@@ -29,7 +29,7 @@ export class EditAuteurComponent implements OnInit{
       next : (auteur) => {
         this.auteur = auteur;
         this.editAuteurFormGroup = this.fb.group({
-          id: [this.auteur.id, []],
+          id: [this.auteur.id],
           firstName: [this.auteur.firstName, [Validators.required, Validators.minLength(5)]],
           lastName: [this.auteur.lastName, [Validators.required, Validators.minLength(5)]],
           tel: [this.auteur.tel, [Validators.required, Validators.minLength(9)]],

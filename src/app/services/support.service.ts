@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {SupportModel} from "../model/support.model";
+import {environment} from "../../environments/environment";
 
 
 @Injectable({
@@ -9,26 +10,25 @@ import {SupportModel} from "../model/support.model";
 })
 
 export class SupportService {
-  backEndHost = "http://localhost:8088";
   constructor(private http : HttpClient) { }
 
   public getSupport() : Observable<SupportModel[]> {
-    return this.http.get<SupportModel[]>(this.backEndHost+"/support");
+    return this.http.get<SupportModel[]>(environment.backendHost + "/support");
   }
 
   public searchSupport(keyword : string) : Observable<SupportModel[]> {
-    return this.http.get<SupportModel[]>(this.backEndHost+"/support/search?keyword="+keyword);
+    return this.http.get<SupportModel[]>(environment.backendHost + "/support/search?keyword="+keyword);
   }
 
   public saveSupport(support : SupportModel) : Observable<SupportModel> {
-    return this.http.post<SupportModel>(this.backEndHost+"/support/newSupport", support);
+    return this.http.post<SupportModel>(environment.backendHost + "/support/newSupport", support);
   }
 
   public updateSupport(id: number, support: SupportModel): Observable<SupportModel> {
-    return this.http.put<SupportModel>(`${this.backEndHost}/support/${id}`, support);
+    return this.http.put<SupportModel>(environment.backendHost + "/support/{id}", support);
   }
 
   public deleteSupport(id : number) {
-    return this.http.delete(this.backEndHost+"/support/"+id);
+    return this.http.delete(environment.backendHost + "/support/"+id);
   }
 }

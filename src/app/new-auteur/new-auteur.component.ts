@@ -17,13 +17,17 @@ export class NewAuteurComponent implements OnInit{
   }
 
   ngOnInit() : void {
+    this.saveAuteur();
+  }
+
+  saveAuteur(){
     this.newAuteurFormGroup = this.fb.group({
       firstName : this.fb.control(null, [Validators.required, Validators.minLength(5)]),
       lastName : this.fb.control(null, [Validators.required, Validators.minLength(5)]),
       tel : this.fb.control(null, [Validators.required, Validators.minLength(9)]),
       email : this.fb.control(null, [Validators.required, Validators.email]),
       grade : this.fb.control(null, [Validators.required])
-    })
+    });
   }
 
   handleSaveAuteur() {
@@ -31,7 +35,9 @@ export class NewAuteurComponent implements OnInit{
     this.auteurService.saveAuteur(auteur).subscribe({
       next : (data) => {
         alert("Auteur has been successfully saved");
-        this.router.navigateByUrl("/auteur");
+        this.router.navigateByUrl("/auteur").then(r => {
+
+        });
       },
       error : err => {
         console.log(err);
